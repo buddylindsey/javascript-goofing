@@ -1,17 +1,21 @@
 window.onload = function(){
 
   function Character(x, y){
+    var chara = this
+    this.ready = false;
     this.x = x;
     this.y = y;
+    this.dude = new Image();
+    this.dude.src = "images/person.png";
+    this.dude.onload = function(){
+      chara.ready = true;
+    }
   }
-
+  
   Character.prototype.draw = function(context){
-    var dude = Image();
-    var x = this.x, y = this.y;
-    dude.onload = function(){
-      context.drawImage(dude, x, y);
+    if(this.ready){
+      context.drawImage(this.dude, this.x, this.y);
     };
-    dude.src = "images/person.png";
   };
 
   Character.prototype.update = function(context){
@@ -20,7 +24,7 @@ window.onload = function(){
   // http://nokarma.org/2011/02/02/javascript-game-development-the-game-loop/index.html
   var Game = {};
 
-  Game.fps = 50;
+  Game.fps = 30;
 
   Game.initialize = function() {
     this.entities = [];
